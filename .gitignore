@@ -1,0 +1,9 @@
+
+#ignore thumbnails created by windows
+Thumbs.db
+.idea
+node_modules/
+*.orig
+*.git
+npm-debug.log
+npm-debug.log/*
