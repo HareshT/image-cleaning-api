@@ -13,7 +13,7 @@ var imagesModel = require('../models/imagesModel');
 var constantConfig = require('../config-local');
 
 exports.saveImageToDatabase = function (req, res, next) {
-  debug('inside saveImageToDatabase');
+  debug('Inside saveImage');
 
   var params = req.body;
   var fileParams = req.file;
@@ -27,7 +27,6 @@ exports.saveImageToDatabase = function (req, res, next) {
     if (error) {
       return next(error);
     }
-    // req.session ={};
     req.session.data = saveImg;
     debug('image Detail %o', req.session);
     return next();
@@ -35,7 +34,7 @@ exports.saveImageToDatabase = function (req, res, next) {
 };
 
 exports.getAllimages = function (req, res, next) {
-  debug('inside getAllimages', req.session.params)
+  debug('Inside getAllimages', req.session.params)
   if (_.isEmpty(req.session.params)) {
     return next(new Boom.notFound('invalid Data'));
   }
@@ -73,8 +72,7 @@ exports.getAllimages = function (req, res, next) {
       }
 
       //filter by image point
-
-      if(!_.isEmpty(params.filter)){
+      if (!_.isEmpty(params.filter)) {
         query['$and'] = [{imgPoint: {$gte: params.filter.minPoint}}, {imgPoint: {$lte: params.filter.maxPoint}}]
       }
       return callback();
@@ -114,19 +112,12 @@ exports.moveImageToAnotherDirectory = function (req, res, next) {
   if (_.isEmpty(params.archivedImgDetail) || _.isEmpty(params.destinationPath)) {
     return next(new Boom.notFound('invalid Data'));
   }
-  var CurrentPathArray = _.split(__dirname,'\\');
-  var pathArray  = _.take(CurrentPathArray, CurrentPathArray.length - 1);
-  var path= '..\\public'
+  var CurrentPathArray = _.split(__dirname, '\\');
+  var pathArray = _.take(CurrentPathArray, CurrentPathArray.length - 1);
+  var path = '..\\public'
 
-  //var basePath = path+'\\imageCleaningFrontEnd\\app';
-  //var sourcePath = basePath + '' + params.archivedImgDetail.imgPath + '' + params.archivedImgDetail.imgName;
-  //var destinationPath = basePath + '\\public\\images\\' + params.destinationPath + '\\' + params.archivedImgDetail.imgName;
-  //
-  var sourcePath ='.\\public'+ params.archivedImgDetail.imgPath + '' + params.archivedImgDetail.imgName;
-  var destinationPath ='.\\public\\images\\' + params.destinationPath + '\\' + params.archivedImgDetail.imgName;
-  ////debug('sourcePath ',sourcePath)
-  ////debug('destinationPath ',destinationPath)
-  //
+  var sourcePath = '.\\public' + params.archivedImgDetail.imgPath + '' + params.archivedImgDetail.imgName;
+  var destinationPath = '.\\public\\images\\' + params.destinationPath + '\\' + params.archivedImgDetail.imgName;
   var source = fs.createReadStream(sourcePath);
   var destination = fs.createWriteStream(destinationPath);
 
@@ -162,8 +153,6 @@ exports.increaseOnePointsForAllAboveImages = function (req, res, next) {
         if (!_.isEmpty(error)) {
           return callback(error)
         }
-        // debug('inc value ', updImgPoints)
-        // req.session.data = updImgPoints;
         return callback()
       });
     },
@@ -175,7 +164,7 @@ exports.increaseOnePointsForAllAboveImages = function (req, res, next) {
         '_id': mongoose.Types.ObjectId(params.archivedImgDetail._id),
         'isDeleted': false
       };
-      var setValue = {$set: {'isDeleted': true, imgPath: 'images\\' + params.destinationPath+'\\'}}
+      var setValue = {$set: {'isDeleted': true, imgPath: 'images\\' + params.destinationPath + '\\'}}
       imagesModel.findOneAndUpdate(query, setValue, function (error, updImgStatus) {
         if (!_.isEmpty(error)) {
           return callback(error)
@@ -192,13 +181,13 @@ exports.increaseOnePointsForAllAboveImages = function (req, res, next) {
   })
 };
 
-exports.verifyOneImageAndAddOnePoint = function(req,res,next){
+exports.verifyOneImageAndAddOnePoint = function (req, res, next) {
   var params = req.session.params;
   if (_.isEmpty(params)) {
     return next(new Boom.notFound('invalid Data'));
   }
   async.series({
-    verifyOneImageAndAddOnePoint : function(callback){
+    verifyOneImageAndAddOnePoint: function (callback) {
       var query = {
         '_id': mongoose.Types.ObjectId(params.verifyImageId),
         'isDeleted': false
@@ -212,14 +201,15 @@ exports.verifyOneImageAndAddOnePoint = function(req,res,next){
         return callback()
       });
     }
-  },function(error){
-    if(!_.isEmpty(error)){
+  }, function (error) {
+    if (!_.isEmpty(error)) {
       return next(error)
     }
     return next();
   })
 };
 
-exports.getApiUrl = function(req,res ,next){
-        res.send(constantConfig.apiUrl)
+exports.getApiUrl = function (req, res, next) {
+  //debug('Inside getApiUrl');
+  res.send(constantConfig.apiUrl);
 }
