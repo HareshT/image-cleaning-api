@@ -10,11 +10,11 @@ var mongoose = require('mongoose');
 var path = require('path');
 var ejs = require('ejs');
 
-var routeV1 = require('./routes/v1/index');
+var routeV1 = require('./routes/v1/Index');
 var response = require('./lib/response');
 var app = express();
 
-var startUpScript = require('./scripts/loadDefaultData');
+var startUpScript = require('./scripts/LoadDefaultData');
 
 // Connect to our database
 // Ideally you will obtain DB details from a environment variable

@@ -2,8 +2,8 @@
 
 var express = require('express');
 
-var testRoutes = require('./testRoutes');
-var imagesRoutes = require('./imagesRoutes');
+var testRoutes = require('./TestRoutes');
+var imagesRoutes = require('./ImagesRoutes');
 var router = express.Router();
 
 //test Route
