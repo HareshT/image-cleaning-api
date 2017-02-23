@@ -7,12 +7,14 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var mongoose = require('mongoose');
+var path = require('path');
+var ejs = require('ejs');
+
 var routeV1 = require('./routes/v1/index');
 var response = require('./lib/response');
-var path = require('path');
 var app = express();
 
-var startUpScript = require('./script/loadDefaultData');
+var startUpScript = require('./scripts/loadDefaultData');
 
 // Connect to our database
 // Ideally you will obtain DB details from a environment variable
@@ -36,10 +38,19 @@ app.use(session({
 }));
 
 mongoose.connect(connectionString);
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(response.trimParams);
 app.use(express.static(path.join(__dirname, 'public')));
+
+//this is api Route Path
+app.get('/',function(req,res){
+    res.render('pages/index.ejs');
+});
 
 // This is our route middleware
 app.use('/api/v1', routeV1);

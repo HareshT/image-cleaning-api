@@ -2,12 +2,12 @@
 
 var express               = require('express');
 var router                = express.Router();
-var testService       = require('../../services/testService');
-var testController    = require('../../controllers/testController');
+var TestService       = require('../../services/TestService');
+var TestController    = require('../../controllers/TestController');
 
 router.post('/addUser',[
-    testService.validateUser,
-    testController.addUser
+    TestService.validateUser,
+    TestController.addUser
 ]);
 
 //router.get('/:name',

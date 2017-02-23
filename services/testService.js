@@ -3,12 +3,12 @@ var debug         = require('debug')('imageCleaning:testServices');
 var Boom          = require('boom');
 var _             = require('lodash');
 
-var userModel   = require('../models/testUserModel');
+var UserModel   = require('../models/TestUserModel');
 
 exports.validateUser = function (req, res, next) {
-    debug('inside validate user')
+    debug('inside validate user');
     var params = req.body;
-    debug('params %o',req.body)
+    debug('params %o',req.body);
 
     if (_.isEmpty(params.name)) {
         return next(new Boom.notFound('Invalid userName'));

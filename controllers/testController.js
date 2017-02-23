@@ -1,16 +1,16 @@
 'use strict';
 
 var debug = require('debug')('imageCleaning: testController');
-var userModel = require('../models/testUserModel');
+var UserModel = require('../models/TestUserModel');
 var Boom = require('boom');
 var moment = require('moment');
 var _ = require('lodash');
 var async = require('async');
 
 exports.addUser = function (req, res, next) {
-    debug('inside addUser controller')
+    debug('inside addUser controller');
     var params = req.body;
-    var newUser = new userModel();
+    var newUser = new UserModel();
     newUser.name = params.name;
     newUser.surName = params.surName;
 
