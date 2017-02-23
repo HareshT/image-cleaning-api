@@ -10,7 +10,7 @@ var fs = require('fs');
 var path = require('path');
 
 var imagesModel = require('../models/imagesModel');
-var constantConfig = require('../config-local');
+//var constantConfig = require('../config-local');
 
 exports.saveImageToDatabase = function (req, res, next) {
   debug('Inside saveImage');
@@ -211,5 +211,5 @@ exports.verifyOneImageAndAddOnePoint = function (req, res, next) {
 
 exports.getApiUrl = function (req, res, next) {
   //debug('Inside getApiUrl');
-  res.send(constantConfig.apiUrl);
+  res.send(process.env.IMAGE_API_URL);
 }

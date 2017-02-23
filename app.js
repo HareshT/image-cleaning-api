@@ -1,6 +1,6 @@
 'use strict';
 /**
- * This file base of for the other App files, all files are included here and returned as object to www.js.
+ * This file base of for the other App files, all files are included here and returned as object to server.js.
  *
  */
 var express = require('express');
@@ -9,16 +9,15 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 var routeV1 = require('./routes/v1/index');
 var response = require('./lib/response');
-var config = require('./config-local');
-var path = require('path')
+var path = require('path');
 var app = express();
 
 var startUpScript = require('./script/loadDefaultData');
 
 // Connect to our database
 // Ideally you will obtain DB details from a environment variable
-var dbName = config.dbName;
-var connectionString = config.dbUrl + dbName;
+var dbName = process.env.IMAGE_DB_NAME;
+var connectionString = process.env.IMAGE_DB_URL + dbName;
 
 // CORS
 app.use(function (request, response, next) {

@@ -1,11 +1,8 @@
 'use strict';
 
 var debug = require('debug')('imageCleaning: appStartUpScript');
-var Boom = require('boom');
 var _ = require('lodash');
 var async = require('async');
-var mongoose = require('mongoose');
-var path = require('path')
 
 var imagesModel = require('../models/imagesModel');
 
@@ -34,7 +31,6 @@ exports.addAllImagesToDataBase = function () {
       var limit = 15;
       for (var i = 1; i <= limit; i++) {
         var imgName = i + '.png'
-        //console.log('immgName :',_.indexOf(allImagesNamePresentInDb,imgName) === -1)
         if (_.indexOf(allImagesNamePresentInDb, imgName) === -1) {
           allImagesNameToBeAddedInDb.push(imgName);
         }
@@ -43,10 +39,6 @@ exports.addAllImagesToDataBase = function () {
     },
     addNewImagesToDatabse: function (callback) {
       debug('images Name', allImagesNameToBeAddedInDb);
-      //var CurrentPathArray = _.split(__dirname,'\\');
-      //var pathArray  = _.take(CurrentPathArray, CurrentPathArray.length - 1);
-      //var path=  _.join(pathArray , '\\')
-
       async.forEachLimit(allImagesNameToBeAddedInDb, 2, function (oneImgDetail, innerCallback) {
         var newImage = new imagesModel();
         newImage.imgName = oneImgDetail;
