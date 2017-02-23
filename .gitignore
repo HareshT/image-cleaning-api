@@ -1,10 +1,11 @@
 
 #ignore thumbnails created by windows
 Thumbs.db
-.idea/*
-*.idea
 node_modules/
 *.orig
 *.git
 npm-debug.log
 npm-debug.log/*
+
+# Avoid pushing WebStorm configuration
+.idea
