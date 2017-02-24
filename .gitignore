@@ -8,4 +8,3 @@ npm-debug.log
 npm-debug.log/*
 
 # Avoid pushing WebStorm configuration
-.idea
